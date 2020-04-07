@@ -1,9 +1,8 @@
-name: git-validate
+name: pr-validate
 
 on:
-  push:
-    branches-ignore:
-      - master
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
 
 jobs:
   build:
@@ -24,8 +23,5 @@ jobs:
       env:
         CI: true
 
-    - name: validate git
-      run: |
-        npm run lint:commits
-      env:
-        CI: true
+    - name: validate pr title
+      uses: ./.github/actions/pr-lint
