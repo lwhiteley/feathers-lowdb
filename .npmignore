@@ -8,3 +8,6 @@
 test/
 coverage/
 .github/
+db-data
+.eslint.json
+commitlint.config.js
