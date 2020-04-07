@@ -1,7 +1,7 @@
 {
   "name": "feathers-lowdb",
   "description": "Feathers LowDB Service",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "homepage": "https://github.com/lwhiteley/feathers-lowdb",
   "main": "lib/",
   "types": "types",
@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "reset": "rm -rf db-data && mkdir db-data",
-    "publish": "git push origin --tags && run-s changelog && git push origin",
+    "publish": "git push --follow-tags && run-s changelog && git push",
     "changelog:commit": "git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "changelog:gen": "standard-changelog",
     "changelog": "run-s changelog:gen changelog:commit",
