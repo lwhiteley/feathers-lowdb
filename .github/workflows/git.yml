@@ -1,0 +1,33 @@
+name: git-validate
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: setup node 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: install deps
+      run: |
+        npm ci
+      env:
+        CI: true
+
+    - name: validate git
+      run: |
+        npm run lint:commits
+      env:
+        CI: true
+        
+    - name: validate pr title
+      uses: ./.github/actions/pr-lint

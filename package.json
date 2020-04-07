@@ -1,0 +1,75 @@
+{
+  "name": "feathers-lowdb",
+  "description": "Feathers LowDB Service",
+  "version": "0.0.0",
+  "homepage": "https://github.com/lwhiteley/feathers-lowdb",
+  "main": "lib/",
+  "types": "types",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lwhiteley/feathers-lowdb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lwhiteley/feathers-lowdb/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "feathers",
+    "feathers-plugin",
+    "REST",
+    "Socket.io",
+    "realtime",
+    "lowdb",
+    "service"
+  ],
+  "author": "Feathers <hello@feathersjs.com> (http://feathersjs.com)",
+  "contributors": [
+    "Layton Whiteley"
+  ],
+  "scripts": {
+    "reset": "rm -rf db-data && mkdir db-data",
+    "publish": "git push origin --tags && npm run changelog && git push origin",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "mocha": "npm run reset && mocha --recursive test --timeout 5000",
+    "test": "npm run lint && npm run mocha",
+    "start": "node example/app",
+    "release:patch": "npm version patch && npm publish --access public",
+    "release:minor": "npm version minor && npm publish --access public",
+    "release:major": "npm version major && npm publish --access public",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:commits": "commitlint --from origin/develop --to HEAD"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "dependencies": {
+    "@feathersjs/adapter-commons": "^4.5.2",
+    "@feathersjs/commons": "^4.5.2",
+    "@feathersjs/errors": "^4.5.2",
+    "sift": "^12.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@feathersjs/adapter-tests": "^4.5.2",
+    "@feathersjs/express": "^4.5.2",
+    "@feathersjs/feathers": "^4.5.2",
+    "@feathersjs/socketio": "^4.5.2",
+    "@types/lowdb": "^1.0.9",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "husky": "^4.2.3",
+    "lowdb": "^1.0.0",
+    "mocha": "^7.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
