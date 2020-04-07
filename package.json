@@ -38,7 +38,7 @@
     "release:major": "npm version major && npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "lint:commits": "commitlint --from origin/develop --to HEAD"
+    "lint:commits": "commitlint --from origin/master --to HEAD"
   },
   "engines": {
     "node": ">= 12"

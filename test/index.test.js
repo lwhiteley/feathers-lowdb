@@ -73,9 +73,6 @@ const testSuite = adapterTests([
   '.patch + id + query id',
 ]);
 
-// NeDB ids do not seem to be generated sequentially but sorted lexigraphically
-// if no other sort order is given. This means that items can not be returned in the
-// same order they have been created so this counter is used for sorting instead.
 class SequentialService extends Service {
   constructor(options) {
     super(options);
@@ -125,7 +122,7 @@ describe('LowDB Service', () => {
     );
   const service = app.service('people');
 
-  describe('nedb params', () => {
+  describe('lowdb base', () => {
     it('throws error when model is missing', () => {
       try {
         const s = new Service();
