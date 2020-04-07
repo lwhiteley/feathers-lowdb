@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "reset": "rm -rf db-data && mkdir db-data",
-    "publish": "git push origin --tags && npm run changelog && git push origin",
+    "publish": "git push origin --tags && git push origin",
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "mocha": "npm run reset && mocha --recursive test --timeout 5000",
     "test": "npm run lint && npm run mocha",
