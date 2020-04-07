@@ -4,7 +4,7 @@
 [![Downloads][downloads-image]][downloads-url]
 [![Build Status][build-image]][repo-url]
 
-[feathers-lowdb](repo-url) is a database service adapter for [Lowdb](lowdb-repo), a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
+[feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
 
 ```bash
 $ npm install --save lowdb feathers-lowdb
@@ -33,7 +33,7 @@ app.use('/messages', service({ Model, id, events, paginate }));
 
 **Options:**
 
-- `Model` (**required**) - The LowDB database instance. See the [LowDB API](lowdb-repo) for more information.
+- `Model` (**required**) - The LowDB database instance. See the [LowDB API][lowdb-repo] for more information.
 - `id` (_optional_, default: `'_id'`) - The name of the id field property.
 - `events` (_optional_) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
 - `paginate` (_optional_) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
@@ -60,7 +60,7 @@ const service = require('feathers-lowdb');
 
 const adapter = new FileSync('./data/messages.json');
 // Create a LowDB instance
-const Model = low(adapter);
+const db = low(adapter);
 
 // Create an Express compatible Feathers application instance.
 const app = express(feathers());
