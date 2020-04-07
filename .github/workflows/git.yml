@@ -1,6 +1,9 @@
 name: git-validate
 
 on:
+  push:
+    branches-ignore:
+      - master
   pull_request:
     types: [opened, synchronize, edited, reopened]
 
