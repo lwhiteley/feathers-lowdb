@@ -1,13 +1,11 @@
-## [0.0.2](https://github.com/lwhiteley/feathers-lowdb/compare/v0.0.1...v0.0.2) (2020-04-07)
+<a name="0.0.4"></a>
 
+## 0.0.4 (2020-04-08)
 
+### Bug Fixes
 
-## [0.0.1](https://github.com/lwhiteley/feathers-lowdb/compare/ad9cc819ab9927406f41bf7abc93c5884eae54ec...v0.0.1) (2020-04-07)
-
+- limit 0 test was not passing ([#3](https://github.com/lwhiteley/feathers-lowdb/issues/3)) ([3426473](https://github.com/lwhiteley/feathers-lowdb/commit/3426473))
 
 ### Features
 
-* add initial library files ([ad9cc81](https://github.com/lwhiteley/feathers-lowdb/commit/ad9cc819ab9927406f41bf7abc93c5884eae54ec))
-
-
-
+- add initial library files ([ad9cc81](https://github.com/lwhiteley/feathers-lowdb/commit/ad9cc81))
