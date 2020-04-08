@@ -29,7 +29,7 @@
   "scripts": {
     "reset": "rm -rf db-data && mkdir db-data",
     "publish": "git push --follow-tags && run-s changelog && git push",
-    "changelog:commit": "git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "changelog:commit": "git add CHANGELOG.md && git commit -am \"chore: updating changelog\"",
     "changelog:gen": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "changelog": "run-s changelog:gen changelog:commit",
     "mocha": "npm run reset && mocha --recursive test --timeout 5000",
