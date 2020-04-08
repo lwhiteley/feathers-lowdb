@@ -1,7 +1,7 @@
 {
   "name": "feathers-lowdb",
   "description": "Feathers LowDB Service",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/lwhiteley/feathers-lowdb",
   "main": "lib/",
   "types": "types",
