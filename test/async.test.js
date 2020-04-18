@@ -4,12 +4,12 @@ const feathers = require('@feathersjs/feathers');
 const errors = require('@feathersjs/errors');
 const adapterTests = require('@feathersjs/adapter-tests');
 const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+const FileAsync = require('lowdb/adapters/FileAsync');
 const mkdirp = require('mkdirp');
 
 const { Service } = require('../lib');
 
-const dir = 'db-data/file-sync';
+const dir = 'db-data/file-async';
 mkdirp.sync(dir);
 
 const testSuite = adapterTests([
@@ -102,11 +102,11 @@ class SequentialService extends Service {
   }
 }
 
-const createService = (name, options) => {
+const createService = async (name, options) => {
   const filename = path.join(dir, name);
 
-  const adapter = new FileSync(`${filename}.json`);
-  const db = low(adapter);
+  const adapter = new FileAsync(`${filename}.json`);
+  const db = await low(adapter);
 
   return new SequentialService({
     Model: db,
@@ -115,12 +115,12 @@ const createService = (name, options) => {
   });
 };
 
-describe('LowDB FileSync Service', () => {
+describe('LowDB FileAsync Service ', async () => {
   const app = feathers()
-    .use('/people', createService('people', {}))
+    .use('/people', await createService('people', {}))
     .use(
       '/people-customid',
-      createService('people-customid', {
+      await createService('people-customid', {
         id: 'customid',
       }),
     );
