@@ -14,7 +14,7 @@
   "author": "Layton Whiteley",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.9.1",
     "@actions/github": "^4.0.0",
     "@commitlint/lint": "^9.1.2",
     "@commitlint/load": "^9.1.2",
