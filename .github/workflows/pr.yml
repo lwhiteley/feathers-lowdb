@@ -12,16 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: setup node 12.x
+    - name: Setup Node LTS
       uses: actions/setup-node@v1
       with:
-        node-version: '12.x'
+        node-version: '16.x'
 
-    - name: install deps
+    - name: Install dependencies
       run: |
         npm ci
       env:
         CI: true
 
-    - name: validate pr title
+    - name: Validate pull request title
       uses: ./.github/actions/pr-lint
