@@ -4,13 +4,18 @@
 [![Downloads][downloads-image]][downloads-url]
 [![Build Status][build-image]][repo-url]
 
-[feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
+[feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server. **Only works with lowdb@1.0.0 for now**
 
 ```bash
 $ npm i --save lowdb feathers-lowdb
 ```
 
 > **Important:** `feathers-lowdb` implements the [Feathers Common database adapter API](https://docs.feathersjs.com/api/databases/common.html) and [querying syntax](https://docs.feathersjs.com/api/databases/querying.html).
+
+## Try it Online 
+
+- [Sandbox with Feathers guestbook example app](https://stackblitz.com/edit/feathers-lowdb-example?file=src/services/messages.service.js)
+
 
 ## API
 
