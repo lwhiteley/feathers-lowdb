@@ -43,7 +43,7 @@
     "lint:commits": "commitlint --from origin/master --to HEAD"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 16"
   },
   "dependencies": {
     "@feathersjs/adapter-commons": "^4.5.2",
