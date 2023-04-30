@@ -1,39 +1,60 @@
 {
   "name": "feathers-lowdb",
-  "description": "Feathers LowDB Service",
-  "version": "0.2.1",
-  "homepage": "https://github.com/lwhiteley/feathers-lowdb",
-  "main": "lib/",
-  "types": "types",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lwhiteley/feathers-lowdb.git"
-  },
-  "bugs": {
-    "url": "https://github.com/lwhiteley/feathers-lowdb/issues"
-  },
-  "license": "MIT",
+  "description": "A LowDB feathers service store with Yaml support",
+  "type": "module",
+  "version": "1.0.0-alpha.1",
+  "homepage": "https://vblip.com",
+  "main": "lib/src",
+  "types": "lib/src",
   "keywords": [
     "feathers",
-    "feathers-plugin",
-    "REST",
-    "Socket.io",
-    "realtime",
-    "lowdb",
-    "service"
+    "feathers-plugin"
   ],
-  "author": "Feathers <hello@feathersjs.com> (http://feathersjs.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FossPrime/feathers-yaml.git"
+  },
+  "author": {
+    "name": "Feathers contributors",
+    "email": "hello@feathersjs.com",
+    "url": "https://feathersjs.com"
+  },
   "contributors": [
-    "Layton Whiteley"
+    "Layton Whiteley",
+    "Ray Foss"
+  ],
+  "bugs": {
+    "url": "https://github.com/feathersjs/feathers/issues"
+  },
+  "engines": {
+    "node": ">= 16"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "_templates/**",
+    "src/**",
+    "lib/**",
+    "*.js"
   ],
   "scripts": {
+    "prepublish": "npm run compile",
+    "pack": "echo 'Skipping pack.'",
+    "upstream-pack": "npm pack --pack-destination ../generators/test/build",
+    "compile": "shx rm -rf lib/ && tsc && npm run pack",
+    "test": "NODE_OPTIONS='' npx mocha --config .mocharc.json --recursive test/**/*.test.ts",
+    "test-artifacts": "cat /tmp/low-*.yaml",
+    "example-vanilla": "ts-node --esm examples/vanilla.ts",
+    "LEGACY-SCRIPTS-BELOW": "echo please migrate these",
     "reset": "rm -rf db-data",
     "publish": "git push --follow-tags && run-s changelog && git push",
     "changelog:commit": "git add CHANGELOG.md && git commit -am \"chore: updating changelog\";exit 0",
     "changelog:gen": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "changelog": "run-s changelog:gen changelog:commit",
     "mocha": "npm run reset && mocha --recursive test --timeout 5000 **/*.test.js",
-    "test": "npm run lint && npm run mocha",
+    "x-test": "npm run lint && npm run mocha",
     "start": "node example/app",
     "release:patch": "npm version patch && npm publish --access public",
     "release:minor": "npm version minor && npm publish --access public",
@@ -42,38 +63,30 @@
     "lint:fix": "eslint . --fix",
     "lint:commits": "commitlint --from origin/master --to HEAD"
   },
-  "engines": {
-    "node": ">= 16"
+  "publishConfig": {
+    "access": "public"
+  },
+  "directories": {
+    "lib": "lib"
   },
   "dependencies": {
-    "@feathersjs/adapter-commons": "^4.5.15",
-    "@feathersjs/errors": "^4.5.15",
-    "sift": "^13.2.0"
+    "@feathersjs/adapter-commons": "^5.0.4",
+    "@feathersjs/commons": "^5.0.4",
+    "@feathersjs/errors": "^5.0.4",
+    "lowdb": "^5.1.0",
+    "sift": "^17.0.1",
+    "yaml": "^2.2.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
-    "@feathersjs/adapter-tests": "^4.5.15",
-    "@feathersjs/express": "^4.5.15",
-    "@feathersjs/feathers": "^4.5.15",
-    "@feathersjs/socketio": "^4.5.15",
-    "@types/lowdb": "^1.0.9",
-    "body-parser": "^1.19.0",
-    "chai": "^4.2.0",
-    "conventional-changelog-cli": "^2.1.0",
-    "eslint": "^7.7.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "husky": "^4.2.5",
-    "lowdb": "^1.0.0",
-    "mkdirp": "^1.0.4",
-    "mocha": "^8.1.1",
-    "npm-run-all": "^4.1.5"
+    "@feathersjs/adapter-tests": "^5.0.4",
+    "@feathersjs/feathers": "^5.0.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.14.6",
+    "mocha": "^10.2.0",
+    "shx": "^0.3.4",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  }
+  "gitHead": "90caf635aec850550b9d37bea2762af959d9e8d5"
 }

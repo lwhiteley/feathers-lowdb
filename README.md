@@ -4,6 +4,8 @@
 [![Downloads][downloads-image]][downloads-url]
 [![Build Status][build-image]][repo-url]
 
+**MAJOR UPDATE IN PROGRESS.. PLEASE WAIT**
+
 [feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server. **Only works with `lowdb@^1.0.0` for now**
 
 ```bash
