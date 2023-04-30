@@ -49,7 +49,7 @@
     "example-vanilla": "ts-node --esm examples/vanilla.ts",
     "LEGACY-SCRIPTS-BELOW": "echo please migrate these",
     "reset": "rm -rf db-data",
-    "publish": "git push --follow-tags && run-s changelog && git push",
+    "x-publish": "git push --follow-tags && run-s changelog && git push",
     "changelog:commit": "git add CHANGELOG.md && git commit -am \"chore: updating changelog\";exit 0",
     "changelog:gen": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "changelog": "run-s changelog:gen changelog:commit",
