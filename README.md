@@ -8,7 +8,8 @@
 
 ## Try it Online 
 
-- [Sandbox with Feathers guestbook example app](https://stackblitz.com/fork/feathers-lowdb-example?file=src/services/messages.service.js)
+- [Quick Start with Browser client](https://stackblitz.com/edit/lowdb-qs-browser)
+- [Quick Start First App](https://stackblitz.com/edit/lowdb-qs-first-app)
 
 
 ```bash
@@ -22,10 +23,10 @@ $ npm i feathers-yaml
 Returns a new database instance initialized with the given options.
 
 ```js
-import { yaml as database } from 'feathers-lowdb'
+import { LowDBService } from 'feathers-lowdb'
 
 export const createModel = (app: Application) => {
-  return database({
+  return new LowDBService({
     filename: 'users.yaml', // or users.json
     id: '_id', // todo: https://github.com/feathersjs/feathers/issues/2839
     startId: 1,
@@ -54,7 +55,7 @@ export const createModel = (app: Application) => {
 Here is an example of a Feathers server with a `messages` LowDB service that supports pagination and persists to `messages.yaml`:
 
 ```
-$ npm i @feathersjs/feathers @feathersjs/koa @feathersjs/socketio feathers-lowdb
+$ npm i @feathersjs/feathers @feathersjs/koa @feathersjs/socketio feathers-lowdb@alpha
 ```
 
 In `app.js`:
@@ -69,7 +70,7 @@ import {
   serveStatic,
 } from '@feathersjs/koa'
 import socketio from '@feathersjs/socketio'
-import { yaml as database } from 'feathers-lowdb' // TODO: Wouldn't using LowDBService directly be better?
+import { LowDBService } from 'feathers-lowdb'
 
 // Creates an ExpressJS compatible Feathers application
 const app = koa(feathers())
@@ -88,8 +89,8 @@ app.configure(socketio())
 // Register our messages service
 app.use(
   '/messages',
-  database({
-    filename: 'messages.yaml', // or users.json
+  new LowDBService({
+    filename: 'messages.yaml', // or messages.json
     id: '_id', // todo: https://github.com/feathersjs/feathers/issues/2839
     startId: 1,
     paginate: {
@@ -114,6 +115,8 @@ app.listen(3030, () => {
 ```
 
 Run the example with `node app` and go to [localhost:3030/messages](http://localhost:3030/messages).
+
+Try this example online: https://stackblitz.com/edit/lowdb-qs-first-app
 
 ## License
 
