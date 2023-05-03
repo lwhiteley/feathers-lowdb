@@ -22,7 +22,7 @@ $ npm i feathers-yaml
 Returns a new database instance initialized with the given options.
 
 ```js
-import { yaml as database } from 'feathers-yaml'
+import { yaml as database } from 'feathers-lowdb'
 
 export const createModel = (app: Application) => {
   return database({
@@ -60,33 +60,32 @@ $ npm i @feathersjs/feathers @feathersjs/koa @feathersjs/socketio feathers-lowdb
 In `app.js`:
 
 ```js
-import { feathers } from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers'
 import {
   koa,
   rest,
   bodyParser,
   errorHandler,
   serveStatic,
-} from '@feathersjs/koa';
-import socketio from '@feathersjs/socketio';
+} from '@feathersjs/koa'
+import socketio from '@feathersjs/socketio'
 import { yaml as database } from 'feathers-lowdb' // TODO: Wouldn't using LowDBService directly be better?
 
 // Creates an ExpressJS compatible Feathers application
-const app = koa(feathers());
+const app = koa(feathers())
 
 // Use the current folder for static file hosting
-app.use(serveStatic('.'));
+app.use(serveStatic('.'))
 // Register the error handle
-app.use(errorHandler());
+app.use(errorHandler())
 // Parse JSON request bodies
-app.use(bodyParser());
+app.use(bodyParser())
 
 // Register REST service handler
-app.configure(rest());
+app.configure(rest())
 // Configure Socket.io real-time APIs
-app.configure(socketio());
+app.configure(socketio())
 // Register our messages service
-app.use('messages', new MessageService());
 app.use(
   '/messages',
   database({
@@ -106,12 +105,12 @@ app
   .create({
     text: 'Message created on server',
   })
-  .then((message) => console.log('Created message', message));
+  .then((message) => console.log('Created message', message))
 
 
 app.listen(3030, () => {
-  console.log(`Feathers server listening`);
-});
+  console.log(`Feathers server listening`)
+})
 ```
 
 Run the example with `node app` and go to [localhost:3030/messages](http://localhost:3030/messages).
