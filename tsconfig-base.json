@@ -1,4 +1,5 @@
 {
+  // Inherited from @feathersjs/memory!
   "compilerOptions": {
     // TODO: We should remove this but lib types break all the time
     "skipLibCheck": true,

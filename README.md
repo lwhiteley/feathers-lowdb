@@ -4,94 +4,101 @@
 [![Downloads][downloads-image]][downloads-url]
 [![Build Status][build-image]][repo-url]
 
-**MAJOR UPDATE IN PROGRESS.. PLEASE WAIT**
-
-[feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server. **Only works with `lowdb@^1.0.0` for now**
-
-```bash
-$ npm i --save lowdb feathers-lowdb
-```
-
-> **Important:** `feathers-lowdb` implements the [Feathers Common database adapter API](https://docs.feathersjs.com/api/databases/common.html) and [querying syntax](https://docs.feathersjs.com/api/databases/querying.html).
+[feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
 
 ## Try it Online 
 
-- [Sandbox with Feathers guestbook example app](https://stackblitz.com/fork/feathers-lowdb-example?file=src/services/messages.service.js)
+- [Quick Start with Browser client](https://stackblitz.com/edit/lowdb-qs-browser)
+- [Quick Start First App](https://stackblitz.com/edit/lowdb-qs-first-app)
 
+
+```bash
+$ npm i feathers-yaml
+```
 
 ## API
 
-### `service(options)`
+### `yaml([options])`
 
-Returns a new service instance initialized with the given options. `Model` has to be an LowDB database instance.
+Returns a new database instance initialized with the given options.
 
 ```js
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const service = require('feathers-lowdb');
+import { LowDBService } from 'feathers-lowdb'
 
-const adapter = new FileSync('./data/messages.json');
-// Create a LowDB instance
-const Model = low(adapter);
-
-app.use('/messages', service({ Model }));
-app.use('/messages', service({ Model, id, events, paginate }));
+export const createModel = (app: Application) => {
+  return new LowDBService({
+    filename: 'users.yaml', // or users.json
+    id: '_id', // todo: https://github.com/feathersjs/feathers/issues/2839
+    startId: 1,
+    paginate: {
+      default: 2,
+      max: 4
+    }
+  })
+}
 ```
 
 **Options:**
 
-- `Model` (**required**) - The LowDB database instance. See the [LowDB API][lowdb-repo] for more information.
-- `id` (_optional_, default: `'_id'`) - The name of the id field property.
+- `filename` (_optional, default `/tmp/low-123-321.yaml`) - The full path to the file
+- `id` (_optional_, default: `'id'`) - The name of the id field property.
+- `startId` (_optional_, default: `0`) - An id number to start with that will be incremented for every new record (unless it is already set).
+- `store` (_optional_) - An object with id to item assignments to pre-initialize the data store
 - `events` (_optional_) - A list of [custom service events](https://docs.feathersjs.com/api/events.html#custom-events) sent by this service
 - `paginate` (_optional_) - A [pagination object](https://docs.feathersjs.com/api/databases/common.html#pagination) containing a `default` and `max` page size
-- `multi` (_optional_) - Allow `create` with arrays and `update` and `remove` with `id` null to change multiple items. Can be `true` for all methods or an array of multi methods (e.g. `[ 'remove', 'create' ]`)
+- `whitelist` (_DEPRECATED_) - renamed to `allow`
+- `allow` (_optional_) - A list of additional query parameters to allow
+- `multi` (_optional_) - Allow `create` with arrays and `update` and `remove` with `id` `null` to change multiple items. Can be `true` for all methods or an array of allowed methods (e.g. `[ 'remove', 'create' ]`)
 
 ## Example
 
-Here is an example of a Feathers server with a `messages` LowDB service that supports pagination and persists to `db-data/messages`:
+Here is an example of a Feathers server with a `messages` LowDB service that supports pagination and persists to `messages.yaml`:
 
 ```
-$ npm i --save @feathersjs/feathers @feathersjs/errors @feathersjs/express @feathersjs/socketio feathers-lowdb lowdb
+$ npm i @feathersjs/feathers @feathersjs/koa @feathersjs/socketio feathers-lowdb@alpha
 ```
 
 In `app.js`:
 
 ```js
-const feathers = require('@feathersjs/feathers');
-const express = require('@feathersjs/express');
-const socketio = require('@feathersjs/socketio');
+import { feathers } from '@feathersjs/feathers'
+import {
+  koa,
+  rest,
+  bodyParser,
+  errorHandler,
+  serveStatic,
+} from '@feathersjs/koa'
+import socketio from '@feathersjs/socketio'
+import { LowDBService } from 'feathers-lowdb'
 
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
-const service = require('feathers-lowdb');
+// Creates an ExpressJS compatible Feathers application
+const app = koa(feathers())
 
-const adapter = new FileSync('./data/messages.json');
-// Create a LowDB instance
-const db = low(adapter);
+// Use the current folder for static file hosting
+app.use(serveStatic('.'))
+// Register the error handle
+app.use(errorHandler())
+// Parse JSON request bodies
+app.use(bodyParser())
 
-// Create an Express compatible Feathers application instance.
-const app = express(feathers());
-// Turn on JSON parser for REST services
-app.use(express.json());
-// Turn on URL-encoded parser for REST services
-app.use(express.urlencoded({ extended: true }));
-// Enable REST services
-app.configure(express.rest());
-// Enable Socket.io services
-app.configure(socketio());
-// Connect to the db, create and register a Feathers service.
+// Register REST service handler
+app.configure(rest())
+// Configure Socket.io real-time APIs
+app.configure(socketio())
+// Register our messages service
 app.use(
   '/messages',
-  service({
-    Model: db,
+  new LowDBService({
+    filename: 'messages.yaml', // or messages.json
+    id: '_id', // todo: https://github.com/feathersjs/feathers/issues/2839
+    startId: 1,
     paginate: {
       default: 2,
-      max: 4,
-    },
-  }),
+      max: 4
+    }
+  })
 );
-// Set up default error handler
-app.use(express.errorHandler());
 
 // Create a dummy Message
 app
@@ -99,21 +106,21 @@ app
   .create({
     text: 'Message created on server',
   })
-  .then((message) => console.log('Created message', message));
+  .then((message) => console.log('Created message', message))
 
-// Start the server.
-const port = 3030;
 
-app.listen(port, () => {
-  console.log(`Feathers server listening on port ${port}`);
-});
+app.listen(3030, () => {
+  console.log(`Feathers server listening`)
+})
 ```
 
 Run the example with `node app` and go to [localhost:3030/messages](http://localhost:3030/messages).
 
+Try this example online: https://stackblitz.com/edit/lowdb-qs-first-app
+
 ## License
 
-Copyright (c) 2019
+Copyright (c) 2023
 
 Licensed under the [MIT license](LICENSE).
 
