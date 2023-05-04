@@ -9,6 +9,7 @@
 ## Try it Online 
 
 - [Quick Start with Browser client](https://stackblitz.com/edit/lowdb-qs-browser)
+- [Quick Start API Server](https://stackblitz.com/edit/lowdb-qs-api)
 - [Quick Start First App](https://stackblitz.com/edit/lowdb-qs-first-app)
 
 

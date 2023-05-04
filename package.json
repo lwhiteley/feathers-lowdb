@@ -2,7 +2,7 @@
   "name": "feathers-lowdb",
   "description": "A LowDB feathers service store with Yaml support",
   "type": "module",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "homepage": "https://vblip.com",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
