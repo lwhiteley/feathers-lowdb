@@ -13,7 +13,7 @@
 
 
 ```bash
-$ npm i feathers-yaml
+$ npm i feathers-yaml@alpha
 ```
 
 ## API
