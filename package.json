@@ -4,8 +4,8 @@
   "type": "module",
   "version": "1.0.0-alpha.1",
   "homepage": "https://vblip.com",
-  "main": "lib/src",
-  "types": "lib/src",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
   "keywords": [
     "feathers",
     "feathers-plugin"
