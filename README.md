@@ -8,9 +8,9 @@
 
 ## Try it Online 
 
-- [Quick Start with Browser client](https://stackblitz.com/edit/lowdb-qs-browser)
-- [Quick Start API Server](https://stackblitz.com/edit/lowdb-qs-api)
-- [Quick Start First App](https://stackblitz.com/edit/lowdb-qs-first-app)
+- [Quick Start with Browser client](https://stackblitz.com/fork/lowdb-qs-browser)
+- [Quick Start API Server](https://stackblitz.com/fork/lowdb-qs-api)
+- [Quick Start First App](https://stackblitz.com/fork/lowdb-qs-first-app)
 
 
 ```bash
@@ -117,7 +117,7 @@ app.listen(3030, () => {
 
 Run the example with `node app` and go to [localhost:3030/messages](http://localhost:3030/messages).
 
-Try this example online: https://stackblitz.com/edit/lowdb-qs-first-app
+Try this example online: https://stackblitz.com/fork/lowdb-qs-first-app
 
 ## License
 
