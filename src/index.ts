@@ -119,6 +119,9 @@ export class LowDBAdapter<
     if (this.db.data === null) {
       await this.db.read()
       this.db.data ||= {}
+      if (this.db.data['' + (this._uId + 1)]) {
+        this._uId = Object.keys(this.db.data).length + this._uId
+      }
     }
     if (this.partition && this.db.data[this.partition] === undefined) {
       this.db.data[this.partition] = {}

@@ -12,7 +12,6 @@ $ npm i feathers-yaml@alpha
 
 ## Try it Online 
 
-Beginner
 
 - [Quick Start with Browser client](https://stackblitz.com/fork/lowdb-qs-browser)
 - [Quick Start API Server](https://stackblitz.com/fork/lowdb-qs-api)
