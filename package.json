@@ -2,7 +2,7 @@
   "name": "feathers-lowdb",
   "description": "A LowDB feathers service store with Yaml support",
   "type": "module",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "homepage": "https://vblip.com",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
@@ -40,7 +40,7 @@
     "*.js"
   ],
   "scripts": {
-    "prepublish": "npm run compile",
+    "prepublishOnly": "npm run compile",
     "pack": "echo 'Skipping pack.'",
     "upstream-pack": "npm pack --pack-destination ../generators/test/build",
     "compile": "shx rm -rf lib/ && tsc && npm run pack",
