@@ -2,20 +2,24 @@
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][downloads-url]
-[![Build Status][build-image]][repo-url]
+[![Test Runner](https://github.com/lwhiteley/feathers-lowdb/actions/workflows/Node18.yml/badge.svg)](https://github.com/lwhiteley/feathers-lowdb/actions/workflows/Node18.yml)
 
-[feathers-lowdb](repo-url) is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
-
-## Try it Online 
-
-- [Quick Start with Browser client](https://stackblitz.com/edit/lowdb-qs-browser)
-- [Quick Start API Server](https://stackblitz.com/edit/lowdb-qs-api)
-- [Quick Start First App](https://stackblitz.com/edit/lowdb-qs-first-app)
-
+[feathers-lowdb][repo-url] is a database service adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
 
 ```bash
 $ npm i feathers-yaml@alpha
 ```
+
+## Try it Online 
+
+
+- [Quick Start with Browser client](https://stackblitz.com/fork/lowdb-qs-browser)
+- [Quick Start API Server](https://stackblitz.com/fork/lowdb-qs-api)
+- [Quick Start First App](https://stackblitz.com/fork/lowdb-qs-first-app)
+
+Advanced
+
+- [Contributors Replit](https://replit.com/@fossprime/feathers-lowdb)
 
 ## API
 
@@ -117,7 +121,7 @@ app.listen(3030, () => {
 
 Run the example with `node app` and go to [localhost:3030/messages](http://localhost:3030/messages).
 
-Try this example online: https://stackblitz.com/edit/lowdb-qs-first-app
+Try this example online: https://stackblitz.com/fork/lowdb-qs-first-app
 
 ## License
 
