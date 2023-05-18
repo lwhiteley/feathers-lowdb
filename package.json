@@ -2,7 +2,7 @@
   "name": "feathers-lowdb",
   "description": "A LowDB feathers database adapter service with yaml and json support",
   "type": "module",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "homepage": "https://vblip.com",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
