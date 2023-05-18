@@ -4,10 +4,10 @@
 [![Downloads][downloads-image]][downloads-url]
 [![Test Runner](https://github.com/lwhiteley/feathers-lowdb/actions/workflows/Node18.yml/badge.svg)](https://github.com/lwhiteley/feathers-lowdb/actions/workflows/Node18.yml)
 
-[feathers-lowdb][repo-url] is a FeathersJS database adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
+[feathers-lowdb][repo-url] is a FeathersJS database adapter for [Lowdb][lowdb-repo], a small JSON and YAML database for Node, and the browser. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
 
 ```bash
-$ npm i feathers-yaml
+$ npm i feathers-lowdb
 ```
 
 ## Try it Online 
