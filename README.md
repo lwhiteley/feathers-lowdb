@@ -7,7 +7,7 @@
 [feathers-lowdb][repo-url] is a FeathersJS database adapter for [Lowdb][lowdb-repo], a small JSON database for Node, Electron and the browser powered by Lodash. LowDB can store data in-memory or on the filesystem which makes it useful as a persistent storage without a separate database server.
 
 ```bash
-$ npm i feathers-yaml@alpha
+$ npm i feathers-yaml
 ```
 
 ## Try it Online 
