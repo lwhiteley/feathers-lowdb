@@ -1,14 +1,23 @@
 {
   "name": "feathers-lowdb",
-  "description": "A LowDB feathers service store with Yaml support",
+  "description": "A LowDB feathers database adapter service with yaml and json support",
   "type": "module",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "homepage": "https://vblip.com",
   "main": "lib/src/index.js",
   "types": "lib/src/index.d.ts",
   "keywords": [
     "feathers",
-    "feathers-plugin"
+    "feathersjs",
+    "feathers-plugin",
+    "feathers-adapter",
+    "lowdb",
+    "database",
+    "nosql",
+    "mongodb",
+    "nedb",
+    "knex",
+    "sql"
   ],
   "license": "MIT",
   "repository": {
