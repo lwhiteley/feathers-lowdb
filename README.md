@@ -21,6 +21,30 @@ Advanced
 
 - [Contributors Replit](https://replit.com/@fossprime/feathers-lowdb)
 
+## LowDB benefits over NeDB, SQLite and others 
+
+- No External Dependencies 🫧: LowDB is a self-contained JavaScript library, whereas NeDB and SQLite require external dependencies. This makes LowDB more convenient to use, as you don't need to manage additional installations or dependencies.
+
+- Flexibility🤸‍♀️: LowDB operates directly on JSON files, allowing you to easily manipulate and access the data using standard JavaScript objects and arrays. This flexibility can be advantageous for certain use cases, such as simple data storage or prototyping.
+
+- Portability ✈️: Since LowDB is based on JSON files, it can be easily shared and moved between different platforms or systems. This makes it suitable for scenarios where data needs to be transferred or accessed across multiple environments.
+
+- The output is aesthetically pleasing by default, making it easier for humans to read without additional tools.
+
+- It is widely used, ensuring good maintenance and a large community.
+
+- It is lightweight by default, without unnecessary attempts to mimic MongoDB or focus on indexing or performance micro-optimizations.
+
+- It utilizes ES Modules, making it as lightweight as possible by default, which is great for frontends.
+
+- Document updates are actually saved instead of being copied as new versions at the bottom of the file, making debugging of userland code easier.
+
+- It is suitable for testing, as the output is more predictable and less cryptic. You can load snapshots, make changes, and expect the output file to be perfectly matched.
+
+- Indexes can be saved outside of the database or as a separate collection, rather than being appended as a strange line in your collection.
+
+
+
 ## API
 
 ### `yaml([options])`
