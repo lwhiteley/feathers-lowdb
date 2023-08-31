@@ -20,6 +20,7 @@ $ npm i feathers-lowdb
 Advanced
 
 - [Contributors Replit](https://replit.com/@fossprime/feathers-lowdb)
+- [Bypass hooks for semi-direct DB access](https://stackblitz.com/edit/feathers-v5-database-hookless?file=app.ts%3AL67)
 
 ## LowDB benefits over NeDB, SQLite and others 
 
