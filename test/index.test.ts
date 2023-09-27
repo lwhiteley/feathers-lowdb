@@ -2,8 +2,10 @@ import assert from 'assert'
 import { adapterTests } from '@feathersjs/adapter-tests'
 import errors from '@feathersjs/errors'
 import { feathers } from '@feathersjs/feathers'
-
-import { LowDBService } from '../src/index.js'
+// @ts-ignore
+import { LowDBService, YAMLFile } from '../src/index.js'
+// @ts-ignore
+import { Low } from 'lowdb'
 
 const testSuite = adapterTests([
   '.options',
@@ -177,6 +179,7 @@ describe('Feathers Memory Service', () => {
     assert.ok(matcherCalled, 'matcher called')
   })
 
+   
   it('does not modify the original data', async () => {
     const people = app.service('people')
 
@@ -192,6 +195,31 @@ describe('Feathers Memory Service', () => {
     assert.strictEqual(otherPerson.age, 33)
 
     await people.remove(person.id)
+  })
+
+  it('support params.adapter.Model', async () => {
+    const Model = new Low(new YAMLFile('/tmp/test-model-' + Date.now() + '.yml'))
+    const oldParams = { adapter: { Model } } as any
+    const people = app.service('people')
+
+    const youngPerson = await people.create({
+      id: 42,
+      name: 'Delete tester',
+      age: 19,
+    })
+    const oldPerson = await people.create({
+      id: 42,
+      name: 'Delete tester',
+      age: 69,
+    }, oldParams)
+    const youngPersonRes = await people.get(42)
+    const oldPersonRes = await people.get(42, oldParams)
+    assert.strictEqual(youngPerson.age, 19)
+    assert.strictEqual(youngPersonRes.age, 19)
+    assert.strictEqual(oldPerson.age, 69)
+    assert.strictEqual(oldPersonRes.age, 69)
+
+    await people.remove(youngPerson.id)
   })
 
   it('update with null throws error', async () => {
