@@ -22,11 +22,10 @@ export interface LowDBServiceStore<T> {
 
 export interface LowDBServiceOptions<T = any> extends AdapterServiceOptions {
   filename?: string
-  store?: LowDBServiceStore<T>
   startId?: number
   matcher?: (query: any) => any
   sorter?: (sort: any) => any,
-  Model?: Adapter<Record<string, any>>,
+  Model?: Low<Record<string, T>>,
   partition?: string
   waitForDisk?: Boolean
 }
@@ -58,15 +57,15 @@ const _select = (data: any, params: any, ...args: string[]) => {
   return base(JSON.parse(JSON.stringify(data)))
 }
 
-const genTempName = () => 
-  `${tmpdir()}/low-${new Date().toISOString()}-${(Math.random() * 9 ** 9) | 0 }`
+const genTempName = () =>
+  `${tmpdir()}/low-${new Date().toISOString()}-${(Math.random() * 9 ** 9) | 0}`
 
 export function yaml<T = any>(
   options: Partial<LowDBServiceOptions<T>> = {}
 ) {
   const filename =
-      options.filename ||
-      genTempName() + '.yaml'
+    options.filename ||
+    genTempName() + '.yaml'
   return new YAMLFile(filename)
 }
 
@@ -74,8 +73,8 @@ export function json<T = any>(
   options: Partial<LowDBServiceOptions<T>> = {}
 ) {
   const filename =
-      options.filename ||
-      genTempName() + '.json'
+    options.filename ||
+    genTempName() + '.json'
   return new JSONFile(filename)
 }
 
@@ -94,6 +93,7 @@ export class LowDBAdapter<
   store: Adapter<Record<string, any>>
   _uId: number
   filename: string // Probably unnecesary
+  defaultModel: Low<Record<string, any>>
   db: Low<Record<string, any>>
   partition: string
   data: Record<string, any>
@@ -104,29 +104,33 @@ export class LowDBAdapter<
       id: 'id',
       matcher: sift.default,
       sorter,
-      // store: {},
       startId: 0,
       ...options,
     })
     this._uId = this.options.startId
-    this.store = this.options.Model || yaml(options)
-    this.db = new Low(this.store)
+    this.defaultModel = this.options.Model || new Low(yaml(options))
     this.partition = options.partition
     this.waitForDisk = !!(options.waitForDisk || this.partition)
   }
 
-  async load() {
-    if (this.db.data === null) {
-      await this.db.read()
-      this.db.data ||= {}
-      if (this.db.data['' + (this._uId + 1)]) {
-        this._uId = Object.keys(this.db.data).length + this._uId
+  async getModel(params: any) {
+    let model = this.defaultModel
+    if (params.adapter?.Model) {
+      model = params.adapter.Model
+    }
+    if (model.data === null) {
+      await model.read()
+      model.data ||= {}
+      if (model.data['' + (this._uId + 1)]) {
+        this._uId = Object.keys(model.data).length + this._uId
       }
     }
-    if (this.partition && this.db.data[this.partition] === undefined) {
-      this.db.data[this.partition] = {}
+    if (this.partition && model.data[this.partition] === undefined) {
+      model.data[this.partition] = {}
     }
-    this.data = this.partition ? this.db.data[this.partition] : this.db.data
+    this.data = this.partition ? model.data[this.partition] : model.data
+
+    return model
   }
 
   async getEntries(_params?: ServiceParams) {
@@ -155,7 +159,7 @@ export class LowDBAdapter<
   async _find(
     params: ServiceParams = {} as ServiceParams
   ): Promise<Paginated<Result> | Result[]> {
-    await this.load()
+    await this.getModel(params)
     const { paginate } = this.getOptions(params)
     const { query, filters } = this.getQuery(params)
 
@@ -217,7 +221,7 @@ export class LowDBAdapter<
     id: Id,
     params: ServiceParams = {} as ServiceParams
   ): Promise<Result> {
-    await this.load()
+    await this.getModel(params)
     const { query } = this.getQuery(params)
 
     if (id in this.data) {
@@ -244,7 +248,7 @@ export class LowDBAdapter<
     data: Partial<Data> | Partial<Data>[],
     params: ServiceParams = {} as ServiceParams
   ): Promise<Result | Result[]> {
-    await this.load()
+    const model = await this.getModel(params)
     const createEntry = async (
       data: Partial<Data> | Partial<Data>[],
       params: ServiceParams = {} as ServiceParams
@@ -265,9 +269,9 @@ export class LowDBAdapter<
 
     await result
     if (this.waitForDisk) { // Be safe if fornicating
-      await this.db.write()
+      await model.write()
     } else {
-      this.db.write()
+      model.write()
     }
     return result
   }
@@ -277,7 +281,7 @@ export class LowDBAdapter<
     data: Data,
     params: ServiceParams = {} as ServiceParams
   ): Promise<Result> {
-    await this.load()
+    const model = await this.getModel(params)
     if (id === null || Array.isArray(data)) {
       throw new BadRequest(
         "You can not replace multiple instances. Did you mean 'patch'?"
@@ -295,9 +299,9 @@ export class LowDBAdapter<
     this.data[id] = result
 
     if (this.waitForDisk) {
-      await this.db.write()
+      await model.write()
     } else {
-      this.db.write()
+      model.write()
     }
     return this._get(id, params)
   }
@@ -318,7 +322,7 @@ export class LowDBAdapter<
     data: PatchData,
     params: ServiceParams = {} as ServiceParams
   ): Promise<Result | Result[]> {
-    await this.load()
+    const model = await this.getModel(params)
     if (id === null && !this.allowsMulti('patch', params)) {
       throw new MethodNotAllowed('Can not patch multiple entries')
     }
@@ -348,9 +352,9 @@ export class LowDBAdapter<
 
     await result
     if (this.waitForDisk) {
-      await this.db.write()
+      await model.write()
     } else {
-      this.db.write()
+      model.write()
     }
     return result
   }
@@ -365,7 +369,7 @@ export class LowDBAdapter<
     id: NullableId,
     params: ServiceParams = {} as ServiceParams
   ): Promise<Result | Result[]> {
-    await this.load()
+    const model = await this.getModel(params)
     if (id === null && !this.allowsMulti('remove', params)) {
       throw new MethodNotAllowed('Can not remove multiple entries')
     }
@@ -389,9 +393,9 @@ export class LowDBAdapter<
 
     delete this.data[id]
     if (this.waitForDisk) {
-      await this.db.write()
+      await model.write()
     } else {
-      this.db.write()
+      model.write()
     }
     return entry
   }
