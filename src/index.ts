@@ -10,11 +10,13 @@ import {
 } from '@feathersjs/adapter-commons'
 import sift from 'sift'
 import { NullableId, Id, Params, Paginated } from '@feathersjs/feathers'
-import { Low } from 'lowdb'
+import { Low as BuiltInLow } from 'lowdb'
 import type { Adapter } from 'lowdb'
 import { TextFile, JSONFile } from 'lowdb/node'
 import YAML from 'yaml'
 import { tmpdir } from 'node:os'
+
+export const Low = BuiltInLow
 
 export interface LowDBServiceStore<T> {
   [key: string]: T
@@ -25,7 +27,7 @@ export interface LowDBServiceOptions<T = any> extends AdapterServiceOptions {
   startId?: number
   matcher?: (query: any) => any
   sorter?: (sort: any) => any,
-  Model?: Low<Record<string, T>>,
+  Model?: BuiltInLow<Record<string, T>>,
   partition?: string
   waitForDisk?: Boolean
 }
@@ -93,8 +95,8 @@ export class LowDBAdapter<
   store: Adapter<Record<string, any>>
   _uId: number
   filename: string // Probably unnecesary
-  defaultModel: Low<Record<string, any>>
-  db: Low<Record<string, any>>
+  defaultModel: BuiltInLow<Record<string, any>>
+  db: BuiltInLow<Record<string, any>>
   partition: string
   data: Record<string, any>
   waitForDisk: boolean
