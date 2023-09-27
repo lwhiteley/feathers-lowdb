@@ -112,13 +112,16 @@ export class LowDBAdapter<
     this._uId = this.options.startId
     this.defaultModel = this.options.Model || new Low(yaml(options))
     this.partition = options.partition
-    this.waitForDisk = !!(options.waitForDisk || this.partition)
   }
 
   async getModel(params: any) {
-    let model = this.defaultModel
+    let model
     if (params.adapter?.Model) {
       model = params.adapter.Model
+      this.waitForDisk = true
+    } else {
+      model = this.defaultModel
+      this.waitForDisk = !!(this.options.waitForDisk || this.partition)
     }
     if (model.data === null) {
       await model.read()
