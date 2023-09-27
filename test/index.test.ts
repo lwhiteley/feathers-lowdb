@@ -2,10 +2,7 @@ import assert from 'assert'
 import { adapterTests } from '@feathersjs/adapter-tests'
 import errors from '@feathersjs/errors'
 import { feathers } from '@feathersjs/feathers'
-// @ts-ignore
-import { LowDBService, YAMLFile } from '../src/index.js'
-// @ts-ignore
-import { Low } from 'lowdb'
+import { LowDBService, YAMLFile, Low } from '../src/index.js'
 
 const testSuite = adapterTests([
   '.options',
