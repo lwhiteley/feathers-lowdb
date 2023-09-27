@@ -21,6 +21,7 @@ Advanced
 
 - [Contributors Replit](https://replit.com/@fossprime/feathers-lowdb)
 - [Bypass hooks for semi-direct DB access](https://stackblitz.com/edit/feathers-v5-database-hookless?file=app.ts%3AL67)
+- [Swap Model via hooks or params](https://stackblitz.com/edit/feathers-v5-adapter-swapping?file=app.ts)
 
 ## LowDB benefits over NeDB, SQLite and others 
 
